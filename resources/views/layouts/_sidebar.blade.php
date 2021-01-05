@@ -1,12 +1,5 @@
 <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
     <div class="c-sidebar-brand d-lg-down-none">
-        {{-- <svg class="c-sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
-        </svg>
-        <a href="#" class="c-sidebar-brand-full">CoreUI</a>
-        <a href="#" class="c-sidebar-brand-minimized">CoreUI</a>
-        <svg class="c-sidebar-brand-minimized" width="46" height="46" alt="CoreUI Logo">
-            <use xlink:href="assets/brand/coreui.svg#signet"></use>
-        </svg> --}}
         <div class="c-sidebar-brand-full">
             <i class="cil-sun mr-2 c-icon-lg c-sidebar-nav-icon"></i>
             Liquid Enjiniring
@@ -29,7 +22,7 @@
             </a>
         </li>
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="#buat-room">
+            <a class="c-sidebar-nav-link" href="{{ route('view.room') }}">
                 <i class="c-sidebar-nav-icon cil-calendar-check"></i>
                 Buat Room Liquid
             </a>

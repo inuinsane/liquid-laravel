@@ -20,10 +20,19 @@
     <link rel="stylesheet" href="/css/coreui.css">
     <script src="/js/coreui.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/all.min.css">
+
+    {{-- JQuery --}}
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+
+    {{-- Multi Select --}}
+    <link rel="stylesheet" href="/css/filter_multi_select.css">
+    <script src="/js/multi-select/filter-multi-select-bundle.min.js"></script>
+
     @yield('head')
+
 </head>
 
-<body class="c-app c-dark-theme">
+<body class="c-app c-dark-theme" id="body-app">
     {{-- Sidebar --}}
     @include('layouts._sidebar')
     <div class="c-wrapper c-fixed-components">
@@ -42,15 +51,37 @@
 
             {{-- Footer --}}
             <footer class="c-footer">
-                <div><a href="/">{{config('app.name', 'Liquid Enji')}}</a> &copy; <span id="copy-year"></span></div>
-                <div class="ml-auto">Developed by &nbsp;<a href="https://ibnuhasan.netlify.app" target="_blank">me</a></div>
+                <div><a href="/">{{ config('app.name', 'Liquid Enji') }}</a> &copy; <span id="copy-year"></span></div>
+                <div class="ml-auto">Developed by &nbsp;<a href="https://ibnuhasan.netlify.app" target="_blank">me</a>
+                </div>
             </footer>
         </div>
     </div>
 
+
+    {{-- JQuery Validation --}}
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/additional-methods.min.js"></script>
+
     <script>
-      const copyYear = document.getElementById('copy-year');
-      copyYear.innerHTML = new Date().getFullYear().toString();
+        const copyYear = document.getElementById('copy-year');
+        copyYear.innerHTML = new Date().getFullYear().toString();
+
+        const themeBtn = document.getElementById('theme-button');
+        const iconTheme = document.getElementById('icon-theme');
+        const body = document.getElementById('body-app');
+
+        // Toggle Dark / Light Theme
+        themeBtn.addEventListener('click', function() {
+            if (body.className.includes('dark')) {
+                body.classList.replace('c-dark-theme', 'c-light-theme');
+                iconTheme.classList.replace('cil-sun', 'cil-moon');
+            } else if (body.className.includes('light')) {
+                body.classList.replace('c-light-theme', 'c-dark-theme');
+                iconTheme.classList.replace('cil-moon', 'cil-sun');
+            }
+        });
+
     </script>
 
     @yield('script')

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -28,6 +29,7 @@ class HomeController extends Controller
 
     public function liquid()
     {
-        return view('liquid');
+        $category = Category::all();
+        return view('liquid', (['category' => $category]));
     }
 }

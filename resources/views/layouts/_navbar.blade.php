@@ -4,32 +4,27 @@
         <i class="c-icon c-icon-lg cil-menu"></i>
     </button>
     <a class="c-header-brand d-lg-none" href="#">
-        <svg width="118" height="46" alt="CoreUI Logo">
+        {{-- <svg width="118" height="46" alt="CoreUI Logo">
             <use xlink:href="assets/brand/coreui.svg#full"></use>
-        </svg>
+        </svg> --}}
     </a>
     <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar"
         data-class="c-sidebar-lg-show" responsive="true">
         <i class="c-icon c-icon-lg cil-menu"></i>
     </button>
     <ul class="c-header-nav d-md-down-none">
-        <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="{{route('home')}}">Home</a></li>
+        <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="{{ route('home') }}">Home</a></li>
     </ul>
     <ul class="c-header-nav ml-auto mr-4">
+        <li class="c-header-nav-link d-md-down-none-mx-2">
+            <a href="javascript:void(0)" class="c-header-nav-link" id="theme-button">
+                <i class="c-icon cil-sun mr-2" id="icon-theme"></i>
+            </a>
+        </li>
         <li class="c-header-nav-item d-md-down-none mx-2">
-            <a class="c-header-nav-link" href="#">
+            <a class="c-header-nav-link" href="{{ route('view.room') }}">
                 <i class="c-icon cil-user-follow mr-2"></i>
                 Buat Liquid
-            </a>
-        </li>
-        <li class="c-header-nav-item d-md-down-none mx-2">
-            <a class="c-header-nav-link" href="#">
-                <i class="cil-list-rich c-icon"></i>
-            </a>
-        </li>
-        <li class="c-header-nav-item d-md-down-none mx-2">
-            <a class="c-header-nav-link" href="#">
-                <i class="c-icon cil-envelope-open"></i>
             </a>
         </li>
         <li class="c-header-nav-item dropdown">
@@ -41,11 +36,11 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right pt-0">
                 <div class="dropdown-header bg-light py-2">
-                    <strong>Account</strong>
+                    Hai, <strong>{{ Auth::user()->name ?? 'Account' }}</strong> !s
                 </div>
                 <a class="dropdown-item" href="#">
                     <i class="c-icon mr-2 cil-user"></i>
-                    Profile
+                    My Profile
                 </a>
                 <div class="dropdown-divider"></div>
                 <form action="{{ route('logout') }}" method="POST">

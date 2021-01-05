@@ -18,7 +18,8 @@ class CreateRoomsTable extends Migration
             $table->id();
             $table->string('code');
             $table->string('id_target');
-            $table->string('date')->default(Carbon::now());
+            $table->string('nama_target');
+            $table->string('date')->default(Carbon::now()->toDateString());
             $table->string('open')->default(true);
             $table->string('photo')->nullable();
             $table->timestamps();

@@ -19,9 +19,12 @@
             </a>
         </li>
         <li class="c-header-nav-item d-md-down-none mx-2">
-            <a class="c-header-nav-link" href="{{ route('view.room') }}">
+            <a class="c-header-nav-link" 
+            {{-- href="{{ route('view.room') }}"  --}}
+            href="javascript:void(0)"
+            id="create-liquid">
                 <i class="c-icon cil-user-follow mr-2"></i>
-                Buat Liquid
+                New Liquid
             </a>
         </li>
         <li class="c-header-nav-item dropdown">

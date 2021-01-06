@@ -12,7 +12,28 @@ class RoomController extends Controller
 {
     public function create(Request $request)
     {
-        dd($request->all());
+        $target = Auth::user();
+        $date = $request->date;
+        $characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $charactersLength = 6;
+        $randomString = '';
+
+        if ($date !== null) {
+            for ($i = 0; $i < $charactersLength; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+            $room = new Room([
+                'code' => $randomString,
+                'id_target' => $target->id,
+                'nama_target' => $target->name,
+                'date' => $date,
+                'open' => '1',
+            ]);
+            $room->save();
+            return redirect()->back()->with(array('message' => 'Room berhasil dibuat', 'type' => 'success'));
+        } else {
+            return redirect()->back()->with(array('message' => 'Tanggal harus diisi', 'type' => 'error'));
+        }
     }
 
     public function view()

@@ -81,6 +81,27 @@
             }
         });
 
+
+        // Create Room
+        $("#create-liquid").on('click', function() {
+            const liquid_url = '/room';
+            Swal.fire({
+                title: "Masukkan Tanggal Liquid",
+                html: `
+                <form action=${liquid_url} method="POST" id="form-create-liquid">
+                    <input type="hidden" value="{{ csrf_token() }}" name="_token">
+                    <input type="date" class="form-control text-dark" id="tanggal-liquid" name="date" required>
+                </form>
+                `,
+                showCancelButton: true,
+                confirmButtonText: "Save",
+                cancelButtonText: "Cancel",
+                buttonsStyling: true
+            }).then(function() {
+                $("#form-create-liquid").submit();
+            });
+        });
+
     </script>
 
     @yield('script')

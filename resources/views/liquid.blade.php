@@ -1,4 +1,4 @@
-@extends('layouts.dashboard');
+@extends('layouts.dashboard')
 
 @section('content')
     <div class="row">
@@ -27,32 +27,34 @@
                 {{-- Penilaian Liquid --}}
                 <div class="card-header">
                     <h3>Pengisian Form Liquid</h3>
+                    <p id="message"></p>
                     <span id="status" class="badge badge-success">Open</span>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('create.penilaian') }}" method="POST" id="form-pengisian">
                         @csrf
+                        <input type="hidden" id="code" name="code" value="Kode Room">
                         {{-- Detail --}}
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name" class="form-label">Nama Target</label>
                                     <input type="text" name="name" id="name" class="form-control disabled"
-                                        value="{{ $room->target ?? 'Nama Target' }}" disabled>
+                                        value="Nama Target" disabled>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="code" class="form-label">Kode Room</label>
-                                    <input type="text" name="code" id="code" class="form-control disabled"
-                                        value="{{ $room->code ?? 'XXXXXX' }}" disabled>
+                                    <label for="kode_room" class="form-label">Kode Room</label>
+                                    <input type="text" name="kode_room" id="kode_room" class="form-control disabled"
+                                        value="XXXXXX" disabled>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="date" class="form-label">Tanggal Open</label>
-                                    <input type="date" name="date" id="date" class="form-control disabled"
-                                        value="{{ $room->date ?? '' }}" disabled>
+                                    <input type="date" name="date" id="date" class="form-control disabled" value=""
+                                        disabled>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +62,7 @@
                             {{-- Kelebihan --}}
                             <div class="col-md-6">
                                 <label for="kelebihan" class="form-label">Kelebihan</label>
-                                <select multiplename="kelebihan" id="kelebihan" multiple name="kelebihan"
+                                <select multiplename="kelebihan" id="kelebihan" multiple name="kelebihan[]"
                                     class="form-control c-multi-select c-multi-select-inline">
                                     @foreach ($category as $item)
                                         @if ($item->jenis === 'kelebihan')
@@ -73,7 +75,7 @@
                             {{-- Kekurangan --}}
                             <div class="col-md-6">
                                 <label for="kekurangan" class="form-label">Kekurangan</label>
-                                <select multiplename="kekurangan" id="kekurangan" multiple name="kekurangan"
+                                <select multiplename="kekurangan" id="kekurangan" multiple name="kekurangan[]"
                                     class="form-control c-multi-select c-multi-select-inline">
                                     @foreach ($category as $item)
                                         @if ($item->jenis === 'kekurangan')
@@ -86,8 +88,6 @@
                             <div class="col-md-12 mt-3">
                                 <div class="form-group">
                                     <label for="saran" class="form-label">Saran</label>
-                                    {{-- <input type="text" name="saran" id="saran"
-                                        class="form-control"> --}}
                                     <textarea name="saran" id="saran" cols="30" rows="5" class="form-control"
                                         placeholder="Masukkan saran anda"></textarea>
                                 </div>
@@ -96,8 +96,6 @@
                             <div class="col-md-12 mt-3">
                                 <div class="form-group">
                                     <label for="harapan" class="form-label">Harapan</label>
-                                    {{-- <input type="text" name="harapan" id="harapan"
-                                        class="form-control"> --}}
                                     <textarea name="harapan" id="harapan" cols="30" rows="5" class="form-control"
                                         placeholder="Masukkan harapan anda"></textarea>
                                 </div>
@@ -178,8 +176,21 @@
                 url: `/room/${code}`,
                 success: function(res) {
                     $("#name").val(res.nama_target);
+                    $("#kode_room").val(res.code);
                     $("#code").val(res.code);
                     $("#date").val(res.date);
+                    if (res.message) {
+                        $("#message").html(res.message);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: res.message,
+                            footer: 'Anda hanya dapat melakukan '
+                        });
+                        $("#liquid").hide();
+                    } else {
+                        $("#liquid").show();
+                    }
                 }
             });
         }
@@ -195,7 +206,8 @@
                 },
                 success: function(res) {
                     res === true ?
-                        $("#liquid").show() && getRoomDetail($("#kode").val().toUpperCase()) :
+                        // $("#liquid").show() && 
+                        getRoomDetail($("#kode").val().toUpperCase()) :
                         $("#liquid").hide();
                 }
             });

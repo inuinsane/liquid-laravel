@@ -4,9 +4,6 @@
         <i class="c-icon c-icon-lg cil-menu"></i>
     </button>
     <a class="c-header-brand d-lg-none" href="#">
-        {{-- <svg width="118" height="46" alt="CoreUI Logo">
-            <use xlink:href="assets/brand/coreui.svg#full"></use>
-        </svg> --}}
     </a>
     <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar"
         data-class="c-sidebar-lg-show" responsive="true">
@@ -45,9 +42,10 @@
                 <div class="dropdown-divider"></div>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <a href="javascript:void(0)" type="submit" class="dropdown-item">
-                        <i class="c-icon mr-2 cil-account-logout"></i>Logout
-                    </a>
+                    <button type="submit" class="dropdown-item">
+                        <i class="c-icon mr-2 cil-account-logout"></i>
+                        Logout
+                    </button>
                 </form>
             </div>
         </li>

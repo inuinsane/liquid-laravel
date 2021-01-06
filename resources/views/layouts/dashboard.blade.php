@@ -28,7 +28,6 @@
     <link rel="stylesheet" href="/css/filter_multi_select.css">
     <script src="/js/multi-select/filter-multi-select-bundle.min.js"></script>
 
-    @yield('head')
 
 </head>
 

@@ -63,7 +63,7 @@
                             <div>
                                 <h2>Registrasi</h2>
                                 <p>Belum punya akun? Silakan registrasi terlebih dahulu</p>
-                                <a href="{{ route('register') }}" class="btn btn-lg btn-outline-light mt-3" type="button">
+                                <a href="{{ route('register') }}" class="btn btn-lg btn-primary mt-3 text-white" type="button">
                                     Klik Disini!
                                 </a>
                             </div>

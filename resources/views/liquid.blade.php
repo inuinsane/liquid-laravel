@@ -185,7 +185,7 @@
                             icon: 'error',
                             title: 'Oops...',
                             text: res.message,
-                            footer: 'Anda hanya dapat melakukan '
+                            footer: 'Anda hanya dapat melakukan penilaian sekali'
                         });
                         $("#liquid").hide();
                     } else {
@@ -248,6 +248,21 @@
             // allows the user to disable and enable options programmatically
             allowEnablingAndDisabling: false,
 
+        });
+
+        
+        $(document).ready(function() {
+            // Flash Message
+            @if(Session::has('message'))
+                let type =  "{{Session::get('type')}}"
+                Swal.fire({
+                    title: type == 'error' ? "Error" : "Sukses",
+                    text: "{{Session::get('message')}}",
+                    icon: type,
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                })
+            @endif
         });
 
     </script>

@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Penilaian;
 use App\Models\Room;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RoomController extends Controller
 {
+    // membuat room
     public function create(Request $request)
     {
         $target = Auth::user();
@@ -17,28 +19,45 @@ class RoomController extends Controller
         $characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $charactersLength = 6;
         $randomString = '';
+        $existing_room = Room::where('id_target', $target->id)->first();
 
         if ($date !== null) {
-            for ($i = 0; $i < $charactersLength; $i++) {
-                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            if ($existing_room !== null && $existing_room->open == 1) {
+                return redirect()->back()->with(array('message' => 'Anda masih memiliki room yang belum di-close', 'type' => 'error'));
+            } else {
+                for ($i = 0; $i < $charactersLength; $i++) {
+                    $randomString .= $characters[rand(0, $charactersLength - 1)];
+                }
+                $room = new Room([
+                    'code' => $randomString,
+                    'id_target' => $target->id,
+                    'nama_target' => $target->name,
+                    'date' => $date,
+                    'open' => '1',
+                ]);
+                $room->save();
+                return redirect()->back()->with(array('message' => 'Room berhasil dibuat', 'type' => 'success'));
             }
-            $room = new Room([
-                'code' => $randomString,
-                'id_target' => $target->id,
-                'nama_target' => $target->name,
-                'date' => $date,
-                'open' => '1',
-            ]);
-            $room->save();
-            return redirect()->back()->with(array('message' => 'Room berhasil dibuat', 'type' => 'success'));
         } else {
             return redirect()->back()->with(array('message' => 'Tanggal harus diisi', 'type' => 'error'));
         }
     }
 
+    // Menampilkan room milik seorang user
     public function view()
     {
-        return view('room');
+        $user = Auth::user();
+        $rooms = Room::where('id_target', $user->id)->get();
+        if ($rooms->isNotEmpty()) {
+            $rooms->map(function ($room) {
+                $room->tanggal =  Carbon::createFromDate($room->date)->locale('id')->isoFormat('dddd, LL');
+                $room->jumlah = count(Penilaian::where('code', $room->code)->get());
+            });
+            return view('room', compact('rooms'));
+        } else {
+            $message = 'Anda belum memilii history liquid';
+            return view('room', (['message' => $message]))->with('error', $message);
+        }
     }
 
     // Ajax dari inputan kolom kode
@@ -77,7 +96,7 @@ class RoomController extends Controller
             // Apakah room masih open
             if ($room->open === "1") {
                 // Apakah user sudah melakukan penilaian
-                $penialaian = Penilaian::where('id_penilai', $user->id)->first();
+                $penialaian = Penilaian::where([['id_penilai', $user->id], ['code', $room->code]])->first();
                 if (!$penialaian) {
                     return response()->json($room, 200);
                 } else {
@@ -89,6 +108,34 @@ class RoomController extends Controller
             }
         } else {
             return response()->json('Tidak ditemukan', 404);
+        }
+    }
+
+
+    // Close Room
+    public function toggleRoom($code)
+    {
+        $user = Auth::user();
+        $room = Room::where('code', $code)->first();
+        // dd($room);
+        if ($room !== null) {
+            if ($room->id_target == $user->id) {
+                if ($room->open == 0) {
+                    $room->update([
+                        'open' => 1,
+                    ]);
+                    return redirect()->back()->with(array('type' => 'success', 'message' => 'Room berhasil dibuka'));
+                } else {
+                    $room->update([
+                        'open' => 0,
+                    ]);
+                    return redirect()->back()->with(array('type' => 'success', 'message' => 'Room berhasil ditutup'));
+                }
+            } else {
+                return redirect()->back()->with(array('type' => 'error', 'message' => 'Room tidak dikenali'));
+            }
+        } else {
+            return redirect()->back()->with(array('type' => 'success', 'message' => 'Room tidak dikenali'));
         }
     }
 }

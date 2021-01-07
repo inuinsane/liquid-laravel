@@ -28,14 +28,13 @@
 </head>
 
 <body class="c-app c-dark-theme flex-row align-items-center">
-            @yield('content')
+    @yield('content')
 
-            <script>
+    <script>
+    </script>
 
-            </script>
+    @yield('script')
 
-            @yield('script')
-        
 </body>
 
 </html>

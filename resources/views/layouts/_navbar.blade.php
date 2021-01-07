@@ -19,11 +19,9 @@
             </a>
         </li>
         <li class="c-header-nav-item d-md-down-none mx-2">
-            <a class="c-header-nav-link" 
-            {{-- href="{{ route('view.room') }}"  --}}
-            href="javascript:void(0)"
-            id="create-liquid">
-                <i class="c-icon cil-user-follow mr-2"></i>
+            <a class="c-header-nav-link" {{-- href="{{ route('view.room') }}"
+                --}} href="javascript:void(0)" id="create-liquid">
+                <i class="c-icon cil-fire mr-2"></i>
                 New Liquid
             </a>
         </li>
@@ -36,7 +34,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right pt-0">
                 <div class="dropdown-header bg-light py-2">
-                    Hai, <strong>{{ Auth::user()->name ?? 'Account' }}</strong> !s
+                    Hai, <strong>{{ Auth::user()->name ?? 'Account' }}</strong> !
                 </div>
                 <a class="dropdown-item" href="#">
                     <i class="c-icon mr-2 cil-user"></i>

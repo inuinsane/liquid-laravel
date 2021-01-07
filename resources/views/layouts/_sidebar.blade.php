@@ -24,7 +24,7 @@
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link" href="{{ route('view.room') }}">
                 <i class="c-sidebar-nav-icon cil-calendar-check"></i>
-                Buat Room Liquid
+                Liquid Saya
             </a>
         </li>
         <li class="c-sidebar-nav-item">

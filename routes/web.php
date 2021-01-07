@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PenilaianController;
 use App\Http\Controllers\RoomController;
+use App\Models\Penilaian;
 use App\Models\Room;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('login'));
 });
 
 Route::get('/check-kode', [RoomController::class, 'check_code'])->name('check.kode');
@@ -38,4 +39,9 @@ Route::prefix('room')->group(function() {
 
 Route::prefix('penilaian')->group(function() {
     Route::post('/', [PenilaianController::class, 'create'])->name('create.penilaian');
+    Route::get('/{code}', [PenilaianController::class , 'view'])->name('view.penilaian');
 });
+
+
+Route::get('/close-room/{code}', [RoomController::class , 'toggleRoom'])->name('close.room');
+Route::get('/open-room/{code}', [RoomController::class , 'toggleRoom'])->name('open.room');

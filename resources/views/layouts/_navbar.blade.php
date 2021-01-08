@@ -16,13 +16,16 @@
         <li class="c-header-nav-link d-md-down-none-mx-2">
             <a href="javascript:void(0)" class="c-header-nav-link" id="theme-button">
                 <i class="c-icon cil-sun mr-2" id="icon-theme"></i>
+                <div id="theme">
+                    Light
+                </div>
             </a>
         </li>
         <li class="c-header-nav-item d-md-down-none mx-2">
             <a class="c-header-nav-link" {{-- href="{{ route('view.room') }}"
                 --}} href="javascript:void(0)" id="create-liquid">
                 <i class="c-icon cil-fire mr-2"></i>
-                New Liquid
+                New
             </a>
         </li>
         <li class="c-header-nav-item dropdown">

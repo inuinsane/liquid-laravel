@@ -28,9 +28,9 @@
             </a>
         </li>
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="#kategori">
+            <a class="c-sidebar-nav-link" href="{{ route('view.penilaian') }}">
                 <i class="c-sidebar-nav-icon cil-list-rich"></i>
-                Kategori Penilaian
+                Hasil Liquid
             </a>
         </li>
     </ul>

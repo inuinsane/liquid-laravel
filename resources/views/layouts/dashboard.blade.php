@@ -75,9 +75,11 @@
             if (body.className.includes('dark')) {
                 body.classList.replace('c-dark-theme', 'c-light-theme');
                 iconTheme.classList.replace('cil-sun', 'cil-moon');
+                $('#theme').html('Dark');
             } else if (body.className.includes('light')) {
                 body.classList.replace('c-light-theme', 'c-dark-theme');
                 iconTheme.classList.replace('cil-moon', 'cil-sun');
+                $('#theme').html('Light');
             }
         });
 
@@ -94,12 +96,29 @@
                 </form>
                 `,
                 showCancelButton: true,
-                confirmButtonText: "Save",
+                confirmButtonText: "Send",
                 cancelButtonText: "Cancel",
                 buttonsStyling: true
-            }).then(function() {
-                $("#form-create-liquid").submit();
+            }).then(result => {
+                if (result.isConfirmed) {
+                    $("#form-create-liquid").submit();
+                    Swal.fire('Mohon tunggu sebentar!', '', 'info');
+                }
             });
+        });
+
+        $(document).ready(function() {
+            // Flash Message
+            @if(Session::has('message'))
+                let type =  "{{Session::get('type')}}";
+                Swal.fire({
+                    title: type == 'error' ? "Error" : "Sukses",
+                    text: "{{Session::get('message')}}",
+                    icon: type,
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                });
+            @endif
         });
 
     </script>

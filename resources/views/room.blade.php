@@ -77,17 +77,6 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            // Flash Message
-            @if(Session::has('message'))
-                let type =  "{{Session::get('type')}}";
-                Swal.fire({
-                    title: type == 'error' ? "Error" : "Sukses",
-                    text: "{{Session::get('message')}}",
-                    icon: type,
-                    showCancelButton: false,
-                    showConfirmButton: false,
-                })
-            @endif
 
             // Action button
             $(".action-button").click(function() {

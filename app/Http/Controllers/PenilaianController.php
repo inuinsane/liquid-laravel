@@ -27,7 +27,7 @@ class PenilaianController extends Controller
     }
 
 
-    public function view($code)
+    public function get($code)
     {
         $penilaian = Penilaian::where('code', $code)->first();
         $categories = Category::all();
@@ -39,5 +39,10 @@ class PenilaianController extends Controller
         } else {
             return response()->json('Room tidak ditemukan', 404);
         }
+    }
+
+    public function view()
+    {
+        return view('penilaian');
     }
 }

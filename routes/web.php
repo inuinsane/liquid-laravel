@@ -39,7 +39,8 @@ Route::prefix('room')->group(function() {
 
 Route::prefix('penilaian')->group(function() {
     Route::post('/', [PenilaianController::class, 'create'])->name('create.penilaian');
-    Route::get('/{code}', [PenilaianController::class , 'view'])->name('view.penilaian');
+    Route::get('/', [PenilaianController::class, 'view'])->name('view.penilaian');
+    Route::get('/{code}', [PenilaianController::class , 'get'])->name('get.penilaian');
 });
 
 

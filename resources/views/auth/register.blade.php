@@ -9,7 +9,7 @@
                         @csrf
                         <div class="card-body p-4">
                             <h1>Register</h1>
-                            <p class="text-muted">Create your account</p>
+                            <p class="text-muted">Silakan isi untuk mendaftar</p>
                             {{-- NAME --}}
                             <div class="input-group mb-2">
                                 <div class="input-group-prepend">

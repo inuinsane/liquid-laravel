@@ -3,22 +3,23 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-5">
                 <div class="card-group">
-                    <div class="card p-4">
+                    <div class="card">
                         <div class="card-body">
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
-                                <h1>Login</h1>
-                                <p class="text-muted">Silakan login di kolom berikut</p>
+                                <h1 class="text-center">Login</h1>
+                                <p class="text-center text-muted">Silakan login untuk mengakses akun anda</p>
                                 <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
                                             <i class="cil-user"></i>
                                         </span>
                                     </div>
-                                    <input name="email" class="form-control @error('email') is-invalid @enderror" type="email" placeholder="Masukkan Email Anda"
-                                         value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                    <input name="email" class="form-control @error('email') is-invalid @enderror"
+                                        type="email" placeholder="Masukkan Email Anda" value="{{ old('email') }}" required
+                                        autocomplete="email" autofocus>
                                 </div>
                                 @error('email')
                                     <span class="text-danger mb-2" role="alert">
@@ -29,8 +30,8 @@
                                     <div class="input-group-prepend"><span class="input-group-text">
                                             <i class="cil-lock-locked"></i>
                                     </div>
-                                    <input name="password" class="form-control @error('email') is-invalid @enderror" type="password"
-                                        placeholder="Masukkan Password Anda" required
+                                    <input name="password" class="form-control @error('email') is-invalid @enderror"
+                                        type="password" placeholder="Masukkan Password Anda" required
                                         autocomplete="current-password">
                                 </div>
                                 @error('password')
@@ -57,18 +58,28 @@
                                 </div>
                             </form>
                         </div>
+                        <div class="card-footer text-center">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p>Belum punya akun? Silakan
+                                        <a href="{{ route('register') }}" class="text-decoration-none">registrasi</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+                    {{-- <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
                         <div class="card-body text-center">
                             <div>
                                 <h2>Registrasi</h2>
                                 <p>Belum punya akun? Silakan registrasi terlebih dahulu</p>
-                                <a href="{{ route('register') }}" class="btn btn-lg btn-primary mt-3 text-white" type="button">
+                                <a href="{{ route('register') }}" class="btn btn-lg btn-primary mt-3 text-white"
+                                    type="button">
                                     Klik Disini!
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

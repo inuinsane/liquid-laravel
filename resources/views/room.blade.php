@@ -34,10 +34,12 @@
                                     </p>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <a href="/penilaian/{{$room->code}}" target="_blank" class="card-text btn-link view-button"
-                                                data-code={{ $room->code }}>
-                                                Lihat hasil
-                                            </a>
+                                            @if ($room->jumlah != 0)
+                                                <a href="/penilaian/{{ $room->code }}"
+                                                    class="card-text btn-link view-button" data-code={{ $room->code }}>
+                                                    Lihat hasil
+                                                </a>
+                                            @endif
                                         </div>
                                         <div class="col-md-6">
                                             @if ($room->open == 1)
@@ -77,47 +79,36 @@
 @section('script')
     <script>
         $(document).ready(function() {
+            // Flash Message
 
             // Action button
             $(".action-button").click(function() {
                 let code = $(this).attr('data-code');
                 let type = $(this).attr('data-type');
                 Swal.fire({
-                    title: "Perhatian",
-                    text: `Apakah anda ingin ${type} room ini?`,
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ok, sikat!',
-                    cancelButtonText: 'Eh, Gajadi',
-                })
-                .then((result) => {
-                    if (result.isConfirmed) {
-                        Swal.fire({
-                            title: "Oke!",
-                            text: "Mohon tunggu sebentar",
-                            icon: "success",
-                            showConfirmButton: false,
-                        });
-                        type.includes('buka') ? 
-                        window.location = `/open-room/${code}` :
-                        window.location = `/close-room/${code}`;
-                    }
-                });
-            });
-
-            // View Button
-            $(".view-button").click(function() {
-                let code = $(this).attr('data-code');
-                let url = `/penilaian/${code}`;
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    success: function(res) {
-                        console.log(res);
-                    },
-                });
+                        title: "Perhatian",
+                        text: `Apakah anda ingin ${type} room ini?`,
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ok, sikat!',
+                        cancelButtonText: 'Eh, Gajadi',
+                    })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                title: "Oke!",
+                                text: "Mohon tunggu sebentar",
+                                icon: "success",
+                                showConfirmButton: false,
+                                showCancelButton: false,
+                            });
+                            type.includes('buka') ?
+                                window.location = `/open-room/${code}` :
+                                window.location = `/close-room/${code}`;
+                        }
+                    });
             });
         });
 

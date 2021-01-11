@@ -10,19 +10,13 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     {{-- CoreUI --}}
     <link rel="stylesheet" href="/css/coreui.css">
-    <script src="/js/coreui.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/all.min.css">
-
-    {{-- JQuery --}}
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 
     {{-- Multi Select --}}
     <link rel="stylesheet" href="/css/filter_multi_select.css">
@@ -58,9 +52,20 @@
     </div>
 
 
+
+
+    {{-- JQuery --}}
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
     {{-- JQuery Validation --}}
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/additional-methods.min.js"></script>
+
+    {{-- CoreUI --}}
+    <script src="/js/coreui.js"></script>
 
     <script>
         const copyYear = document.getElementById('copy-year');
@@ -102,17 +107,24 @@
             }).then(result => {
                 if (result.isConfirmed) {
                     $("#form-create-liquid").submit();
-                    Swal.fire('Mohon tunggu sebentar!', '', 'info');
+                    Swal.fire({
+                        title: "Mohon tunggu sebentar",
+                        text: "",
+                        icon: "info",
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                    });
                 }
             });
         });
 
+        // Flash Message
+
         $(document).ready(function() {
-            // Flash Message
             @if(Session::has('message'))
                 let type =  "{{Session::get('type')}}";
                 Swal.fire({
-                    title: type == 'error' ? "Error" : "Sukses",
+                    title: type === 'error' ? "Error" : "Sukses",
                     text: "{{Session::get('message')}}",
                     icon: type,
                     showCancelButton: false,

@@ -21,9 +21,8 @@
                 </div>
             </a>
         </li>
-        <li class="c-header-nav-item d-md-down-none mx-2">
-            <a class="c-header-nav-link" {{-- href="{{ route('view.room') }}"
-                --}} href="javascript:void(0)" id="create-liquid">
+        <li class="c-header-nav-link d-md-down-none-mx-2">
+            <a class="c-header-nav-link" href="javascript:void(0)" id="create-liquid">
                 <i class="c-icon cil-fire mr-2"></i>
                 New
             </a>

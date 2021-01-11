@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Penilaian;
+use App\Models\Room;
 use Illuminate\Support\Facades\Auth;
 
 class PenilaianController extends Controller
@@ -22,22 +23,26 @@ class PenilaianController extends Controller
         ]);
         $penilaian->save();
 
-        $success = array('type' => 'success', 'message' => 'Penilaian sukses!');
+        $success = array('type' => 'success', 'message' => 'Penilaian telah disimpan!');
         return redirect()->back()->with($success);
     }
 
 
     public function get($code)
     {
-        $penilaian = Penilaian::where('code', $code)->first();
-        $categories = Category::all();
-        if($penilaian !== null) {
-            $penilaian->kelebihan = unserialize($penilaian->kelebihan);
-            $penilaian->kekurangan = unserialize($penilaian->kekurangan);
-            // return response()->json(['penilaian' =>$penilaian, 'categories' => $categories], 200);
-            return view('penilaian', compact('penilaian', 'categories'));
+        $error = array('type' => 'error', 'message' => 'Penilaian tidak ditemukan');
+        $penilaian = Penilaian::where('code', $code)->get();
+        if ($penilaian->isNotEmpty()) {
+            $categories = Category::all();
+            $target = Room::where('code', $code)->first()->nama_target;
+            $penilaian->map(function ($p) {
+                $p->list_kelebihan = unserialize($p->kelebihan);
+                $p->list_kekurangan = unserialize($p->kekurangan);
+            });
+            // dd($penilaian);
+            return view('penilaian', compact('penilaian', 'categories', 'target', 'code'));
         } else {
-            return response()->json('Room tidak ditemukan', 404);
+            return redirect()->back()->with($error);
         }
     }
 

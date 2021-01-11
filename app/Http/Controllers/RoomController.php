@@ -19,10 +19,10 @@ class RoomController extends Controller
         $characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $charactersLength = 6;
         $randomString = '';
-        $existing_room = Room::where('id_target', $target->id)->first();
+        $existing_room = Room::where([['id_target', $target->id], ['open', '!=', '0']])->first();
 
         if ($date !== null) {
-            if ($existing_room !== null && $existing_room->open == 1) {
+            if ($existing_room !== null) {
                 return redirect()->back()->with(array('message' => 'Anda masih memiliki room yang belum di-close', 'type' => 'error'));
             } else {
                 for ($i = 0; $i < $charactersLength; $i++) {

@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class RoomController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     // membuat room
     public function create(Request $request)
     {

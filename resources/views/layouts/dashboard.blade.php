@@ -18,10 +18,6 @@
     <link rel="stylesheet" href="/css/coreui.css">
     <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/all.min.css">
 
-    {{-- Multi Select --}}
-    <link rel="stylesheet" href="/css/filter_multi_select.css">
-    <script src="/js/multi-select/filter-multi-select-bundle.min.js"></script>
-
 
 </head>
 
@@ -66,6 +62,10 @@
 
     {{-- CoreUI --}}
     <script src="/js/coreui.js"></script>
+
+    {{-- Multi Select --}}
+    <link rel="stylesheet" href="/css/filter_multi_select.css">
+    <script src="/js/multi-select/filter-multi-select-bundle.min.js"></script>
 
     <script>
         const copyYear = document.getElementById('copy-year');

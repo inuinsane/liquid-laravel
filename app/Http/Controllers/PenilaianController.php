@@ -14,6 +14,7 @@ class PenilaianController extends Controller
     {
         $this->middleware('auth');
     }
+    // Buat penilaian
     public function create(Request $request)
     {
         $penilaian = new Penilaian([
@@ -31,7 +32,7 @@ class PenilaianController extends Controller
         return redirect()->back()->with($success);
     }
 
-
+    // Tampilkan penilaian
     public function get($code)
     {
         $error = array('type' => 'error', 'message' => 'Penilaian tidak ditemukan');
@@ -44,7 +45,8 @@ class PenilaianController extends Controller
                 $p->list_kekurangan = unserialize($p->kekurangan);
             });
             // dd($penilaian);
-            return view('penilaian', compact('penilaian', 'categories', 'target', 'code'));
+            $status = Room::where('code', $code)->first();
+            return view('penilaian', compact('penilaian', 'categories', 'target', 'code', 'status'));
         } else {
             return redirect()->back()->with($error);
         }

@@ -32,4 +32,9 @@ class HomeController extends Controller
         $category = Category::all();
         return view('liquid', (['category' => $category]));
     }
+
+    public function kategori()
+    {
+        return view('kategori');
+    }
 }

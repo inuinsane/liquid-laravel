@@ -28,25 +28,22 @@
         <div class="row">
             <div class="col-md-12">
                 <h3 class="card-title">Detail Penilaian</h3>
-                <p class="card-subtitle mb-5">Berikut ini adalah detail penilaian liquid untuk:
+                <p class="card-subtitle mb-2">Berikut ini adalah detail penilaian liquid untuk:
                     <strong> {{ $target ?? '' }} </strong>
                 </p>
+                <p class="card-subtitle mb-2 text-muted jumlah-penilai">Dinilai Oleh: </p>
+                <p class="card-subtitle mb-5 text-muted" id="status">Status:</p>
             </div>
             {{-- Kelebihan --}}
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <h5 class="text-xl">
                                     <i class="c-icon mr-1 cil-mood-very-good"></i>
                                     Kelebihan
                                 </h5>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="card-header-action float-right jumlah-penilai">
-                                    Dinilai oleh: 0 orang
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -75,16 +72,11 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <h5 class="text-xl">
                                     <i class="c-icon mr-1 cil-frown"></i>
                                     Kekurangan
                                 </h5>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="card-header-action float-right jumlah-penilai">
-                                    Dinilai oleh: 0 orang
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -113,16 +105,11 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <h5 class="text-xl">
                                     <i class="c-icon mr-1 cil-gift"></i>
                                     Saran dan Harapan
                                 </h5>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="card-header-action float-right jumlah-penilai">
-                                    Dinilai oleh: 0 orang
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -141,30 +128,34 @@
         const penilaian = @json($penilaian ?? '');
         // jumlah penilai
         const jumlah_penilai = penilaian.length;
+        const status = @json($status->open ?? '');
+        let isOpen = status == 1 ? `<strong class="text-lg text-success">Open</strong>` : `<strong class="text-lg text-danger">Closed</strong>`;
 
         if (penilaian !== '') {
-            const dinilai = document.querySelectorAll('.jumlah-penilai');
-            dinilai[0].innerHTML = `Dinilai oleh: ${jumlah_penilai} orang`;
-            dinilai[1].innerHTML = `Dinilai oleh: ${jumlah_penilai} orang`;
-            // console.log(penilaian);
+            const dinilai = document.querySelector('.jumlah-penilai');
+            dinilai.innerHTML = `Dinilai oleh: ${jumlah_penilai} orang`;
+            document.getElementById('status').innerHTML = `Status: <strong>${isOpen}</strong>`;
 
 
             // mengisi kelebihan dan kekurangan
             let kelebihan_kekurangan = [];
             penilaian.forEach(item => {
-                item.list_kelebihan.forEach(el => {
-                    if (el !== null) {
-                        kelebihan_kekurangan.push(el);
-                    }
-                });
-                item.list_kekurangan.forEach(el => {
-                    if (el !== null) {
-                        kelebihan_kekurangan.push(el);
-                    }
-                });
+                if(item.list_kelebihan) {
+                    item.list_kelebihan.forEach(el => {
+                        if (el !== null) {
+                            kelebihan_kekurangan.push(el);
+                        }
+                    });
+                }
+                if(item.list_kekurangan) {
+                    item.list_kekurangan.forEach(el => {
+                        if (el !== null) {
+                            kelebihan_kekurangan.push(el);
+                        }
+                    });
+                }
 
             });
-            // console.log(kelebihan_kekurangan);
 
 
 

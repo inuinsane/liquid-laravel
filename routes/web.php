@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PenilaianController;
 use App\Http\Controllers\RoomController;
@@ -29,6 +30,7 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/liquid', [HomeController::class, 'liquid'])->name('liquid');
+Route::get('/kategori', [HomeController::class, 'kategori'])->name('view.kategori');
 
 
 Route::prefix('room')->group(function() {
@@ -46,3 +48,7 @@ Route::prefix('penilaian')->group(function() {
 
 Route::get('/close-room/{code}', [RoomController::class , 'toggleRoom'])->name('close.room');
 Route::get('/open-room/{code}', [RoomController::class , 'toggleRoom'])->name('open.room');
+
+Route::prefix('kategori')->group(function() {
+    Route::get('/json', [CategoryController::class, 'json'])->name('get.category.datatable');
+});

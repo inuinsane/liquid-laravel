@@ -79,8 +79,6 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            // Flash Message
-
             // Action button
             $(".action-button").click(function() {
                 let code = $(this).attr('data-code');
@@ -98,8 +96,7 @@
                     .then((result) => {
                         if (result.isConfirmed) {
                             Swal.fire({
-                                title: "Oke!",
-                                text: "Mohon tunggu sebentar",
+                                title: "Mohon tunggu sebentar",
                                 icon: "success",
                                 showConfirmButton: false,
                                 showCancelButton: false,

@@ -54,7 +54,7 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     {{-- JQuery Validation --}}
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
@@ -88,6 +88,11 @@
             }
         });
 
+        // Tooltip
+        $(function () {
+            $('[data-tooltip="true"]').tooltip()
+        })
+
 
         // Create Room
         $("#create-liquid").on('click', function() {
@@ -119,17 +124,47 @@
         });
 
         // Flash Message
-
         $(document).ready(function() {
-            @if(Session::has('message'))
-                let type =  "{{Session::get('type')}}";
-                Swal.fire({
-                    title: type === 'error' ? "Error" : "Sukses",
-                    text: "{{Session::get('message')}}",
-                    icon: type,
-                    showCancelButton: false,
-                    showConfirmButton: false,
-                });
+            @if (Session::has('message'))
+            let type = "{{ Session::get('type') }}";
+            switch (type) {
+                    case 'info':
+                        Swal.fire({
+                            title: 'Perhatian!',
+                            text: "{{Session::get('message')}}",
+                            icon: type,
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                        });
+                        break;
+                    case 'warning':
+                        Swal.fire({
+                            title: 'Perhatian!',
+                            text: "{{Session::get('message')}}",
+                            icon: type,
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                        });
+                        break;
+                    case 'success':
+                        Swal.fire({
+                            title: 'Sukses!',
+                            text: "{{Session::get('message')}}",
+                            icon: type,
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                        });
+                        break;
+                    case 'error':
+                        Swal.fire({
+                            title: 'Error!',
+                            text: "{{Session::get('message')}}",
+                            icon: type,
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                        });
+                        break;
+            }
             @endif
         });
 

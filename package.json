@@ -25,6 +25,8 @@
     "dependencies": {
         "@coreui/coreui": "^3.4.0",
         "@sweetalert2/theme-dark": "^4.0.1",
+        "datatables.net-bs4": "^1.10.23",
+        "datatables.net-buttons-bs4": "^1.6.5",
         "sweetalert2": "^10.13.0"
     }
 }

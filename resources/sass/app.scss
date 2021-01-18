@@ -8,4 +8,8 @@
 @import '~bootstrap/scss/bootstrap';
 
 // SweetAlert2
-@import '~@sweetalert2/theme-dark/dark.scss';
+@import '~@sweetalert2/theme-dark/dark.css';
+
+// Datatable
+@import "~datatables.net-bs4/css/dataTables.bootstrap4.css";
+@import "~datatables.net-buttons-bs4/css/buttons.bootstrap4.css";

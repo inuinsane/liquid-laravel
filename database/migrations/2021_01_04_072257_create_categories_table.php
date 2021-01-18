@@ -19,6 +19,8 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('jenis');
             $table->string('keterangan');
+            $table->string('input_oleh');
+            $table->string('edit_oleh')->nullable();
             $table->timestamps();
         });
 

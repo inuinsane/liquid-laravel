@@ -203,7 +203,7 @@
             penilaian.forEach(item=> {
                 $('#harapan').append("<li>" + item.harapan + "</li>");
                 $('#saran').append("<li>" + item.saran + "</li>");
-                $('#tigaKata').append("<li>" + item.tigaKata + "</li>");
+                $('#tiga-kata').append("<li>" + item.tigaKata + "</li>");
             })
 
             // Hide progress bar yang kosong

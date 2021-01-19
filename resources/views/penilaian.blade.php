@@ -27,12 +27,16 @@
     @isset($penilaian)
         <div class="row">
             <div class="col-md-12">
-                <h3 class="card-title">Detail Penilaian</h3>
-                <p class="card-subtitle mb-2">Berikut ini adalah detail penilaian liquid untuk:
-                    <strong> {{ $target ?? '' }} </strong>
-                </p>
-                <p class="card-subtitle mb-2 text-muted jumlah-penilai">Dinilai Oleh: </p>
-                <p class="card-subtitle mb-5 text-muted" id="status">Status:</p>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Detail Penilaian</h3>
+                        <p class="card-subtitle mb-2">Berikut ini adalah detail penilaian liquid untuk:
+                            <strong> {{ $target ?? '' }} </strong>
+                        </p>
+                        <p class="card-subtitle text-muted jumlah-penilai mb-2">Dinilai Oleh: </p>
+                        <p class="card-subtitle text-muted" id="status">Status:</p>
+                    </div>
+                </div>
             </div>
             {{-- Kelebihan --}}
             <div class="col-md-4">
@@ -50,14 +54,14 @@
                     <div class="card-body">
                         @foreach ($categories as $category)
                             @if ($category->jenis == 'kelebihan')
-                                <div class="form-group">
-                                    <label for="{{ $category->keterangan }}" class="form-label">
+                                <div class="form-group isian-wrapper" id="isian-{{$category->id}}" data-value="0">
+                                    <label for="{{ $category->keterangan }}" class="form-label kolom-progress">
                                         <strong>{{ $category->keterangan }}</strong>
                                         <span id="total-{{ $category->id }}" class="ml-1 text-muted"></span>
                                     </label>
                                     <div class="progress">
                                         <div id="{{ $category->id }}" class="progress-bar bg-info text-white" aria-valuemin="0"
-                                            aria-valuemax="100" aria-valuenow="80">
+                                            aria-valuemax="100" aria-valuenow="0">
                                         </div>
                                     </div>
                                 </div>
@@ -83,14 +87,14 @@
                     <div class="card-body">
                         @foreach ($categories as $category)
                             @if ($category->jenis == 'kekurangan')
-                                <div class="form-group">
-                                    <label for="{{ $category->keterangan }}" class="form-label">
+                                <div class="form-group isian-wrapper" id="isian-{{$category->id}}" data-value="0">
+                                    <label for="{{ $category->keterangan }}" class="form-label kolom-progress">
                                         <strong>{{ $category->keterangan }}</strong>
                                         <span id="total-{{ $category->id }}" class="ml-1 text-muted"></span>
                                     </label>
                                     <div class="progress">
                                         <div id="{{ $category->id }}" class="progress-bar bg-info text-white" aria-valuemin="0"
-                                            aria-valuemax="100" aria-valuenow="80">
+                                            aria-valuemax="100" aria-valuenow="0">
                                         </div>
                                     </div>
                                 </div>
@@ -114,8 +118,14 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <h5>Harapan</h5>
-                        <h5>Saran</h5>
+                        <h6>Harapan</h6>
+                        <ul id="harapan"></ul>
+
+                        <h6>Saran</h6>
+                        <ul id="saran"></ul>
+
+                        <h6>Tiga Kata untuk {{$target ?? ''}} </h6>
+                        <ul id="tiga-kata"></ul>
                     </div>
                 </div>
             </div>
@@ -128,8 +138,9 @@
         const penilaian = @json($penilaian ?? '');
         // jumlah penilai
         const jumlah_penilai = penilaian.length;
-        const status = @json($status->open ?? '');
-        let isOpen = status == 1 ? `<strong class="text-lg text-success">Open</strong>` : `<strong class="text-lg text-danger">Closed</strong>`;
+        const status = @json($status -> open ?? '');
+        let isOpen = status == 1 ? `<strong class="text-lg text-success">Open</strong>` :
+            `<strong class="text-lg text-danger">Closed</strong>`;
 
         if (penilaian !== '') {
             const dinilai = document.querySelector('.jumlah-penilai');
@@ -140,14 +151,14 @@
             // mengisi kelebihan dan kekurangan
             let kelebihan_kekurangan = [];
             penilaian.forEach(item => {
-                if(item.list_kelebihan) {
+                if (item.list_kelebihan) {
                     item.list_kelebihan.forEach(el => {
                         if (el !== null) {
                             kelebihan_kekurangan.push(el);
                         }
                     });
                 }
-                if(item.list_kekurangan) {
+                if (item.list_kekurangan) {
                     item.list_kekurangan.forEach(el => {
                         if (el !== null) {
                             kelebihan_kekurangan.push(el);
@@ -172,6 +183,11 @@
             Object.keys(isian).forEach(function(key) {
                 let progress = document.getElementById(key);
                 let persen = document.getElementById(`total-${key}`);
+                // ini adalah form-group 
+                let wrapper = document.getElementById(`isian-${key}`);
+
+                // Mengisi value pada wrapper progress untuk hide / show
+                wrapper.setAttribute('data-value', Math.round((wrapper[key] / jumlah_penilai) * 100).toString());
 
                 // Mengisi progress bar
                 progress.setAttribute('aria-valuenow', Math.round((isian[key] / jumlah_penilai) * 100));
@@ -183,14 +199,46 @@
                 // Mengisi persen nilai
                 persen.innerHTML = Math.round((isian[key] / jumlah_penilai) * 100).toString() + "%";
             });
+
+            // Mengisi Harapan
+            const harapan = document.getElementById('harapan');
+            const saran = document.getElementById('saran');
+            const tigaKata = document.getElementById('tiga-kata');
+            penilaian.forEach(item=> {
+                harapan.innerHTML = `<li>${item.harapan}</li>`;
+                saran.innerHTML = `<li>${item.saran}</li>`;
+                tigaKata.innerHTML = `<li>${item.tigaKata}</li>`;
+            })
+
+            // Hide progress bar yang kosong
+            $(document).ready(function() {
+                const wrapper = $('.isian-wrapper');
+                $(wrapper).each(function() {
+                    if ($(this).attr('data-value') == '0') {
+                        $(this).hide();
+                    } else {
+                        $(this).show();
+                    }
+                })
+            });
+            
+            
         }
 
 
 
-
+        // Search Liquid Data
         $('#submit-btn').on('click', function() {
             let code = document.getElementById('code');
-            window.location = `/penilaian/${code.value}`;
+            if (code.value == '') {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Kode room belum diisi',
+                    icon: 'error',
+                });
+            } else {
+                window.location = `/penilaian/${code.value}`;
+            }
         });
 
     </script>

@@ -165,7 +165,6 @@
                         }
                     });
                 }
-
             });
 
 
@@ -205,9 +204,9 @@
             const saran = document.getElementById('saran');
             const tigaKata = document.getElementById('tiga-kata');
             penilaian.forEach(item=> {
-                harapan.innerHTML = `<li>${item.harapan}</li>`;
-                saran.innerHTML = `<li>${item.saran}</li>`;
-                tigaKata.innerHTML = `<li>${item.tigaKata}</li>`;
+                harapan.append(`<li>${item.harapan}</li>`);
+                saran.append(`<li>${item.saran}</li>`);
+                tigaKata.append(`<li>${item.tigaKata}</li>`);
             })
 
             // Hide progress bar yang kosong

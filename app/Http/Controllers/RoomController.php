@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Penilaian;
 use App\Models\Room;
 use App\Models\User;
+use App\Notifications\NotifikasiRoomBaru;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +41,12 @@ class RoomController extends Controller
                     'open' => '1',
                 ]);
                 $room->save();
+
+                $users = User::where('email', '!=', $target->email)->get();
+                foreach($users as $user) {
+                    $user->notify(new NotifikasiRoomBaru($room, $target , $user));
+                }
+
                 return redirect()->back()->with(array('message' => 'Room berhasil dibuat', 'type' => 'success'));
             }
         } else {

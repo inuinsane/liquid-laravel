@@ -31,17 +31,17 @@
             <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                 aria-expanded="false">
                 <div class="c-avatar">
-                    <img class="c-avatar-img" src="{{ asset('/images/male-avatar.png') }}" alt="user@email.com">
+                    <img class="c-avatar-img" src="https://ui-avatars.com/api/?rounded=true&size=128&bold=true&background=0D8ABC&color=fff&name={{Auth::user()->name}}" alt="Avatar">
                 </div>
             </a>
             <div class="dropdown-menu dropdown-menu-right pt-0">
                 <div class="dropdown-header bg-light py-2">
                     Hai, <strong>{{ Auth::user()->name ?? 'Account' }}</strong> !
                 </div>
-                <a class="dropdown-item" href="#">
+                {{-- <a class="dropdown-item" href="#">
                     <i class="c-icon mr-2 cil-user"></i>
                     My Profile
-                </a>
+                </a> --}}
                 <div class="dropdown-divider"></div>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
